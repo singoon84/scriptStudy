@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="./jquery-3.5.0.min.js"></script>
+	<title>updown button 으로 element 위/아래 이동</title>
+	<script>
+		$(function(){
+			selected = 0;
+			var target =$('.menu')
+			var idx = $('.menu li').length
+
+			$('.menu li').on('click',function(){
+				selected = $(this).index();
+				$('.menu li').removeClass('selected')
+				$(this).addClass('selected')
+			})
+
+			$('#btnUp').on('click',function(e){
+				e.preventDefault()
+				if(selected > 0){
+					target.children().eq(selected-1).before(target.children().eq(selected))
+					selected = selected - 1
+				}
+			})
+
+			$('#btnDown').on('click',function(e){
+				e.preventDefault()
+				if(selected < idx-1){
+					target.children().eq(selected+1).after(target.children().eq(selected))
+					selected = selected + 1
+				}
+			})
+		})
+	</script>
+	<style>
+		.menu li {padding:5px}
+		.menu li.selected {background:#ddd}
+	</style>
+</head>
+<body>
+	<ul class="menu">
+		<li>menu1</li>
+		<li>menu2</li>
+		<li>menu3</li>
+		<li>menu4</li>
+		<li>menu5</li>
+	</ul>
+	<div class="btnWrap">
+			<button id="btnUp">Up</button>
+			<button id="btnDown">Down</button>
+	</div>
+</body>
+</html>
