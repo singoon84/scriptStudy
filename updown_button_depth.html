@@ -51,9 +51,11 @@
 			menuSet();
 
 			$(document).on('click','.menu li',function(e){
-				var targetIdx = $(e.target).index()
-				var parentIdx = $(e.target).parent().parent().index()
-				console.log($(this))
+				target = $(this).parent()
+				selected = $(this).index()
+				idx = $(this).parent().find('li').length
+				$(this).parent().find('li').removeClass('selected')
+				$(this).addClass("selected")
 			})
 
 
