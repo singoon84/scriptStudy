@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="./jquery-3.5.0.min.js"></script>
+	<title>updown button 으로 element 위/아래 이동 - 뎁스추가</title>
+	<script>
+		$(function(){
+			var selected = 0;
+			var target;
+			var idx;
+			var depth1 = 0;
+			var depth2 = 0;
+			var depth3 = 0;
+
+			$(document).on('click','.menu li',function(){
+				target = $(this).parent()
+				selected = $(this).index()
+				idx = $(this).parent().find('li').length
+				$(this).parent().find('li').removeClass('selected')
+				$(this).addClass("selected")
+			})
+
+
+			$('#btnUp').on('click',function(e){
+				e.preventDefault()
+				if(selected > 0){
+					target.children().eq(selected-1).before(target.children().eq(selected))
+					selected = selected - 1
+				}
+			})
+
+			$('#btnDown').on('click',function(e){
+				e.preventDefault()
+				if(selected < idx-1){
+					target.children().eq(selected+1).after(target.children().eq(selected))
+					selected = selected + 1
+				}
+			})
+		})
+	</script>
+	<style>
+		* {margin:0; padding:0}
+		li {list-style:none}
+		.wrap {padding:50px}
+		.menuWrap:after {content:'';clear:both;display:block}
+		.menu {width:200px;height:300px; float:left; margin-right:10px; border:1px solid #ddd; border-radius:3px; padding:10px 0; overflow-y:scroll}
+		.menu li {padding:5px 20px;cursor:pointer}
+		.menu li.selected {background:#ddd}
+		.btnWrap {width:100%;clear:both; margin-top:10px;}
+		.btnWrap button {border:1px solid #ddd; padding:5px 10px; min-width:50px;cursor:pointer;outline:0}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="menuWrap">
+			<div class="menu">
+				<ul>
+					<li id="menu1">개인</li>
+					<li id="menu2">기업</li>
+				</ul>
+			</div>
+			<div class="menu depth02">
+				<!-- 개인 -->
+				<ul>
+					<li>V3 365클리닉</li>
+					<li>PC주치의</li>
+				</ul>
+				<!-- 기업 -->
+				<ul>
+					<li>엔드포인트 보안</li>
+					<li>네트워크 보안</li>
+					<li>차세대 APT 보안</li>
+				</ul>
+			</div>
+			<div class="menu depth03">
+				<!-- 엔드포인트 보안 -->
+				<ul>
+					<li>V3 Internet Security 9.0</li>
+					<li>V3 Endpoint Security 9.0</li>
+				</ul>
+				<!-- 네트워크 보안 -->
+				<ul>
+					<li>TrusGuard</li>
+					<li>TrusGuard IPX</li>
+				</ul>
+				<!-- 차세대 APT 보안 -->
+				<ul>
+					<li>MDS</li>
+				</ul>
+			</div>
+		</div>
+		<div class="btnWrap">
+			<button id="btnUp">Up</button>
+			<button id="btnDown">Down</button>
+		</div>
+	</div>
+</body>
+</html>
